@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Donas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffc38a;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgb(255, 117, 4);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #000000;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .card {
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgb(255, 115, 0);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        .card button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .card-frutal {
+            background-color: #ff7782; /* Rojo claro */
+        }
+        .card-tropical {
+            background-color: #ffe07a; /* Amarillo claro */
+        }
+        .card-sorpresa {
+            background-color: #74654a; /* Café claro */
+        }
+        .custom-card {
+            background-color: #719399; /* Celeste claro */
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
+        .card button:hover {
+            opacity: 0.8;
+        }
+        .cart {
+            margin-top: 20px;
+        }
+        .cart h2 {
+            text-align: center;
+            color: #444;
+        }
+        .cart table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .cart table, .cart th, .cart td {
+            border: 1px solid #ddd;
+        }
+        .cart th, .cart td {
+            padding: 10px;
+            text-align: left;
+        }
+        .cart th {
+            background-color: #f7f7f7;
+        }
+        .cart .remove-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cart .remove-btn:hover {
+            background-color: #c82333;
+        }
+        .total {
+            text-align: right;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DONA MANÍA</h1>
+
+        <!-- Productos (Combos) -->
+        <div class="grid-container">
+            <div class="card card-frutal">
+                <h3>Combo Frutal: Nutella con Fresa - $3</h3>
+                <button onclick="agregarAlCarrito('Combo Frutal', 3)">Agregar al carrito</button>
+            </div>
+            
+            <div class="card card-tropical">
+                <h3>Combo Tropical: Nutella con Banano - $3</h3>
+                <button onclick="agregarAlCarrito('Combo Tropical', 3)">Agregar al carrito</button>
+            </div>
+            
+            <div class="card card-sorpresa">
+                <h3>Combo Sorpresa: Chocolate Hershey con Galleta Oreo - $3</h3>
+                <button onclick="agregarAlCarrito('Combo Sorpresa', 3)">Agregar al carrito</button>
+            </div>
+
+            <div class="card custom-card">
+                <h3>Combo Personalizado - $3</h3>
+                <div class="product-options">
+                    <div class="option-group">
+                        <label for="topping">Selecciona un topping:</label>
+                        <select id="topping">
+                            <option value="No aplica" data-price="0">No aplica</option>
+                            <option value="Banano" data-price="0.35">Banano ($0.35)</option>
+                            <option value="Fresa" data-price="0.35">Fresa ($0.35)</option>
+                            <option value="Galleta Oreo" data-price="0.35">Galleta Oreo ($0.35)</option>
+                            <option value="Coco" data-price="0.35">Coco ($0.35)</option>
+                            <option value="Chispas de colores" data-price="0.35">Chispas de colores ($0.35)</option>
+                            <option value="Chispas de chocolate" data-price="0.35">Chispas de chocolate ($0.35)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="jarabe">Selecciona un jarabe:</label>
+                        <select id="jarabe">
+                            <option value="No aplica" data-price="0">No aplica</option>
+                            <option value="Caramelo" data-price="0.35">Caramelo ($0.35)</option>
+                            <option value="Leche condensada" data-price="0.35">Leche condensada ($0.35)</option>
+                            <option value="Nutella" data-price="0.35">Nutella ($0.35)</option>
+                            <option value="Chocolate Hershey" data-price="0.35">Chocolate Hershey ($0.35)</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="agregarPersonalizado()">Agregar al carrito</button>
+            </div>
+        </div>
+
+        <!-- Carrito de Compras -->
+        <div class="cart">
+            <h2>Carrito de Compras</h2>
+            <div id="cart-tables">
+                <!-- Tablas del carrito se insertarán aquí -->
+            </div>
+            <div class="total" id="total">Total: $0.00</div>
+            <div class="pagination" id="pagination-controls">
+                <!-- Controles de paginación se insertarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let actionCount = 0;
+        let itemsPerPage = 10;
+
+        function agregarAlCarrito(product, price) {
+            const now = new Date();
+            const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+            cart.push({ product, extras: [], price, time });
+            actionCount++;
+            actualizarCarrito();
+        }
+
+        function agregarPersonalizado() {
+            let toppingSelect = document.getElementById('topping');
+            let jarabeSelect = document.getElementById('jarabe');
+
+            let topping = toppingSelect.options[toppingSelect.selectedIndex];
+            let jarabe = jarabeSelect.options[jarabeSelect.selectedIndex];
+
+            let extras = [];
+            let extraPrice = 0;
+
+            if (topping.value !== "No aplica") {
+                extras.push(topping.value);
+                extraPrice += parseFloat(topping.dataset.price);
+            }
+
+            if (jarabe.value !== "No aplica") {
+                extras.push(jarabe.value);
+                extraPrice += parseFloat(jarabe.dataset.price);
+            }
+
+            const now = new Date();
+            const time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+            cart.push({ product: 'Combo Personalizado', extras, price: 3 + extraPrice, time });
+            actionCount++;
+            actualizarCarrito();
+        }
+
+        function eliminarDelCarrito(index) {
+            cart.splice(index, 1);
+            actionCount++;
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            mostrarPaginas();
+        }
+
+        function mostrarPaginas() {
+            const cartTables = document.getElementById('cart-tables');
+            const paginationControls = document.getElementById('pagination-controls');
+            cartTables.innerHTML = '';
+            paginationControls.innerHTML = '';
+
+            const pages = Math.ceil(cart.length / itemsPerPage);
+            for (let i = 0; i < pages; i++) {
+                const table = document.createElement('table');
+                table.className = 'cart-table';
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Extras</th>
+                            <th>Hora</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cart.slice(i * itemsPerPage, (i + 1) * itemsPerPage).map((item, index) => `
+                            <tr>
+                                <td>${item.product}</td>
+                                <td>${item.extras.join(', ')}</td>
+                                <td>${item.time}</td>
+                                <td>$${item.price.toFixed(2)}</td>
+                                <td><button class="remove-btn" onclick="eliminarDelCarrito(${i * itemsPerPage + index})">Eliminar</button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                cartTables.appendChild(table);
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('total').innerText = `Total: $${total.toFixed(2)}`;
+
+            for (let i = 0; i < pages; i++) {
+                const button = document.createElement('button');
+                button.innerText = `Página ${i + 1}`;
+                button.onclick = () => {
+                    const tables = document.querySelectorAll('.cart-table');
+                    tables.forEach((table, index) => {
+                        table.style.display = (index === i) ? 'table' : 'none';
+                    });
+                };
+                paginationControls.appendChild(button);
+            }
+
+            const tables = document.querySelectorAll('.cart-table');
+            if (tables.length > 0) {
+                tables[0].style.display = 'table'; // Muestra la primera tabla por defecto
+            }
+        }
+
+        window.onload = function() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                actionCount = cart.length;
+                actualizarCarrito();
+            }
+        }
+    </script>
+</body>
+</html>
