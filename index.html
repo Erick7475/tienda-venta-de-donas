@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de Donas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -189,6 +190,7 @@
             <div class="pagination" id="pagination-controls">
                 <!-- Controles de paginación se insertarán aquí -->
             </div>
+            <button id="exportButton">Exportar a Excel</button>
         </div>
     </div>
 
@@ -298,6 +300,19 @@
                 tables[0].style.display = 'table'; // Muestra la primera tabla por defecto
             }
         }
+
+        document.getElementById('exportButton').addEventListener('click', function() {
+            const ws_data = [
+                ["Producto", "Extras", "Hora", "Precio"],
+                ...cart.map(item => [item.product, item.extras.join(', '), item.time, item.price.toFixed(2)])
+            ];
+            
+            const ws = XLSX.utils.aoa_to_sheet(ws_data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Carrito");
+
+            XLSX.writeFile(wb, 'carrito.xlsx');
+        });
 
         window.onload = function() {
             const savedCart = localStorage.getItem('cart');
